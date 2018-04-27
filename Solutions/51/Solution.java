@@ -24,14 +24,14 @@ public class Solution {
                 current.add(line);
             }
             result.add(current);
-        }
-
-        for(int q = 0; q < n; q++){
-            if(check(rows, i, q, n)){
-                rows[i] = q;
-                solve(i+1, rows, n, result);
-                // 这里是最重要的一行，找完上一步以后继续回来循环
-                rows[i] = -1;
+        } else{
+            for(int q = 0; q < n; q++){
+                if(check(rows, i, q, n)){
+                    rows[i] = q;
+                    solve(i+1, rows, n, result);
+                    // 这里是最重要的一行，找完上一步以后继续回来循环
+                    rows[i] = -1;
+                }
             }
         }
     }
