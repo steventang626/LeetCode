@@ -1,2 +1,4 @@
 # LeetCode
-LeetCode problems solutions 
+LeetCode problems solutions in Java
+
+Add one more everyday
