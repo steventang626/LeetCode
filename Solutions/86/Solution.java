@@ -1,13 +1,28 @@
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
-        val = x;
-    }
-}
-
 public class Solution {
     public ListNode partition(ListNode head, int x) {
+        if(head == null || head.next == null) return head;
+        ListNode small = new ListNode(-1);
+        ListNode big = new ListNode(-1);
+        ListNode small_recent = small;
+        ListNode big_recent = big;
+        ListNode recent = head;
+        while (recent != null) {
+            if(recent.val < x){
+                small_recent.next = recent;
+                small_recent = recent;
+            }else{
+                big_recent.next = recent;
+                big_recent = recent;
+            }
+            recent = recent.next;
+        }
+        big_recent.next = null;
+        small_recent.next = big.next;
+        return small.next;
+    }
+
+    // Add new nodes, which is nor very good
+    public ListNode partition1(ListNode head, int x) {
         if(head == null || head.next == null) return head;
         ListNode small = new ListNode(-1);
         ListNode big = new ListNode(-1);
@@ -27,16 +42,12 @@ public class Solution {
         small_recent.next = big.next;
         return small.next;
     }
+
     public static void main(String[] args){
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(4);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(2);
-        l1.next.next.next.next = new ListNode(5);
-        ListNode l4 = new Solution().partition(l1, 3);
-        while (l4 != null) {
-            System.out.println(l4.val);
-            l4 = l4.next;
-        }
+        int[] nums = {1, 4, 3, 2, 5, 1};
+        ListNode head = new ListNode(nums);
+        System.out.println(head);
+        ListNode head2 = new Solution().partition(head, 3);
+        System.out.println(head2);
     }
 }
