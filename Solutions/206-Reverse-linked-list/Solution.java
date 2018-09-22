@@ -1,11 +1,3 @@
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
-        val = x;
-    }
-}
-
 public class Solution {
     // Reversed recursively
     public ListNode reverseList1(ListNode head) {
@@ -33,15 +25,11 @@ public class Solution {
     }
 
     public static void main(String[] args){
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(2);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(4);
-        l1.next.next.next.next = new ListNode(5);
-        ListNode l2 = new Solution().reverseList1(l1);
-        while (l2 != null) {
-            System.out.println(l2.val);
-            l2 = l2.next;
-        }
+        int[] nums = {1, 2, 3, 4, 5};
+        ListNode head = new ListNode(nums);
+        System.out.println(head);
+
+        ListNode head2 = new Solution().reverseList1(head);
+        System.out.println(head2);
     }
 }
