@@ -1,11 +1,30 @@
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) { val = x; }
-}
-
 public class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        int num = 0;
+        ListNode temp = dummy;
+        while(temp.next != null) {
+            num++;
+            temp = temp.next;
+        }
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while(num >= k) {
+            for(int i = 1; i < k; i++){
+                ListNode t = cur.next;
+                cur.next = t.next;
+                t.next = pre.next;
+                pre.next = t;
+            }
+            pre = cur;
+            cur = cur.next;
+            num = num - k;
+        }
+        return dummy.next;
+    }
+
+    public ListNode reverseKGroup2(ListNode head, int k) {
         ListNode ls = head;
         for(int i = 0; i<k; i++){
             if(ls == null) return head;
@@ -30,9 +49,11 @@ public class Solution {
             for(int i = 0; i<k-1; i++){
                 if(ls4.next == null) {
                     ls.next = ls2;
+                    System.out.println(ls2.val);
                     return head;
                 }else {
                     ls4 = ls4.next;
+                    System.out.println("here"+ls4.val);
                 }
             }
             ls1 = ls4;
@@ -53,15 +74,11 @@ public class Solution {
 
     public static void main(String[] args) {
         //System.out.println("start");
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(2);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(4);
 
-        ListNode l4 = new Solution().reverseKGroup(l1,3);
-        while (l4 != null) {
-            System.out.println(l4.val);
-            l4 = l4.next;
-        }
+        int[] nums = {1, 2, 3, 4, 5, 6};
+        ListNode head = new ListNode(nums);
+
+        ListNode result = new Solution().reverseKGroup(head,3);
+        System.out.println(result);
     }
 }
