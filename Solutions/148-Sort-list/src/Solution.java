@@ -50,10 +50,7 @@ public class Solution {
         } else {
             recent.next = l1;
         }
-        ListNode listNode = recent;
-        ListNode test = dummyHead;
-        ListNode result = dummyHead.next;
-        return result;
+        return dummyHead.next;
     }
 
     public static void main(String[] args) {
@@ -61,12 +58,5 @@ public class Solution {
         ListNode head = new ListNode(nums);
         ListNode result = new Solution().sortList1(head);
         System.out.print(result);
-
-//        int[] nums1 = {-1};
-//        ListNode head1 = new ListNode(nums1);
-//        int[] nums2 = {-1};
-//        ListNode head2 = new ListNode(nums2);
-//        ListNode result = new Solution().mergeTwoSortedLists(head1, head2);
-//        System.out.print(result);
     }
 }
