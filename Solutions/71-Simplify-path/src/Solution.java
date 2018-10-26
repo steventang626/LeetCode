@@ -1,4 +1,27 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class Solution {
+    // Use stack
+    public String simplifyPath2(String path) {
+        String[] pathNames = path.split("/");
+        Stack<String> pathStack = new Stack<>();
+        for(int i = 0; i < pathNames.length; i++) {
+            if(pathNames[i].equals("") || pathNames[i].equals(".")) continue;
+            if(pathNames[i].equals("..")){
+                if (!pathStack.isEmpty()) {
+                    pathStack.pop();
+                }
+            } else {
+                pathStack.push(pathNames[i]);
+            }
+        }
+        if (pathStack.empty()) return "/";
+        List<String> list = new ArrayList<>(pathStack);
+        return "/" + String.join("/", list);
+    }
+
     public String simplifyPath(String path) {
         path = path + "/";
         int i = 1;
@@ -46,7 +69,7 @@ public class Solution {
         }
     }
     public static void main(String[] args){
-        String result = new Solution().simplifyPath("/a/./b/../../c/");
+        String result = new Solution().simplifyPath2("/a//b////c/d//././/..");
         System.out.println(result);
     }
 }
