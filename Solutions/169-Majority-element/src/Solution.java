@@ -52,13 +52,13 @@ public class Solution {
                 }
             }
             if(ones > zeros) {
-                result += 1 << i;
+                result |= (1 << i);
             }
         }
         return result;
     }
     public static void main(String[] args) {
-        int[] nums = {2,2,2,1};
-        System.out.println(new Solution().majorityElement2(nums));
+        int[] nums = {-2,-2,-2,-1};
+        System.out.println(new Solution().majorityElement3(nums));
     }
 }
