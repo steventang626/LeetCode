@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 class TreeNode {
@@ -26,40 +27,18 @@ public class Solution {
 
     public List<TreeNode> generateTreesFromK(int n, int k){
         List<TreeNode> results = new ArrayList<>();
-        //System.out.println(results.size());
-        if(n < 1) return results;
-        if(n == 1){
-            results.add(new TreeNode(1 + k));
+        if(n < 1) {
+            results.add(null);
             return results;
         }
         for(int i = 1; i <= n; i++){
             List<TreeNode> left_result = generateTreesFromK(i - 1, k);
             List<TreeNode> right_result = generateTreesFromK(n - i, i + k);
-            if(left_result.size() == 0){
-                for(int j = 0; j < right_result.size(); j++){
+            for(TreeNode l : left_result){
+                for(TreeNode r: right_result){
                     TreeNode root = new TreeNode(i + k);
-                    root.right = right_result.get(j);
-                    results.add(root);
-                }
-                continue;
-            }
-            if(right_result.size() == 0){
-                for(int j = 0; j < left_result.size(); j++){
-                    TreeNode root = new TreeNode(i + k);
-                    root.left = left_result.get(j);
-                    results.add(root);
-                }
-                continue;
-            }
-            for(int j = 0; j < left_result.size(); j++){
-                for(int l = 0; l < right_result.size(); l++){
-                    TreeNode root = new TreeNode(i + k);
-                    if(left_result.size() != 0){
-                        root.left = left_result.get(j);
-                    }
-                    if(right_result.size() != 0){
-                        root.right = right_result.get(l);
-                    }
+                    root.left = l;
+                    root.right = r;
                     results.add(root);
                 }
             }
@@ -68,6 +47,7 @@ public class Solution {
     }
 
     public List<TreeNode> generateTrees(int n) {
+        if(n == 0) return new ArrayList<>();
         return generateTreesFromK(n, 0);
     }
 
