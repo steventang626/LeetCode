@@ -17,10 +17,10 @@ public class Solution {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) return result;
 
-        LinkedList<Pair<TreeNode, Integer>> queue = new LinkedList<>();
-        queue.addLast(new Pair<>(root, 0));
+        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        queue.add(new Pair<>(root, 0));
         while(!queue.isEmpty()) {
-            Pair<TreeNode, Integer> recent = queue.removeFirst();
+            Pair<TreeNode, Integer> recent = queue.poll();
             TreeNode node = recent.getKey();
             int level = recent.getValue();
 
@@ -29,10 +29,10 @@ public class Solution {
             }
             result.get(level).add(node.val);
             if (node.left != null) {
-                queue.addLast(new Pair<>(node.left, level + 1));
+                queue.add(new Pair<>(node.left, level + 1));
             }
             if (node.right != null) {
-                queue.addLast(new Pair<>(node.right, level + 1));
+                queue.add(new Pair<>(node.right, level + 1));
             }
         }
         return result;
