@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public boolean isIsomorphic1(String s, String t) {
@@ -21,7 +22,7 @@ public class Solution {
     public boolean isIsomorphic(String s, String t) {
         if (s.length() != t.length()) return false;
         if (s.length() <= 1) return true;
-        HashMap<Character, Character> map = new HashMap<>();
+        Map<Character, Character> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
             if (!map.containsKey(s.charAt(i)) && !map.containsValue(t.charAt(i))) {
                 map.put(s.charAt(i), t.charAt(i));

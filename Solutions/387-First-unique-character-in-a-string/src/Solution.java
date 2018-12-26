@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public int firstUniqueChar(String s) {
@@ -17,14 +18,10 @@ public class Solution {
     }
 
     public int firstUniqueChar2(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
         for(int i = 0; i < s.length(); i++) {
             char recent = s.charAt(i);
-            if(map.containsKey(recent)) {
-                map.replace(recent, map.get(recent) + 1);
-            } else {
-                map.put(recent, 1);
-            }
+            map.put(recent, map.getOrDefault(recent, 0) + 1);
         }
         int result = -1;
         for(int i = 0; i < s.length(); i++) {

@@ -3,7 +3,7 @@ import java.util.*;
 public class Solution {
     // Time O(nlogn), Space O(n)
     public List<Integer> topKFrequent(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for(int num: nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
@@ -30,7 +30,7 @@ public class Solution {
         for(int num: nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        PriorityQueue<Integer> heap = new PriorityQueue<Integer>((n1, n2) -> map.get(n1) - map.get(n2));
+        PriorityQueue<Integer> heap = new PriorityQueue<>((n1, n2) -> map.get(n1) - map.get(n2));
         for(int n: map.keySet()) {
             heap.add(n);
             if(heap.size() > k) {

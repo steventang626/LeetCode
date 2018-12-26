@@ -1,10 +1,11 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     // use hashMap, Time O(n), Space O(n)
     public int majorityElement(int[] nums) {
         int majority = nums.length / 2;
-        HashMap<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         int recent;
         for(int i = 0; i < nums.length; i++) {
             recent = nums[i];
