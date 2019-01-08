@@ -3,10 +3,12 @@ import java.util.*;
 public class Solution {
     // Time O(nlogn), Space O(n)
     public List<Integer> topKFrequent(int[] nums, int k) {
+        assert k > 0;
         Map<Integer, Integer> map = new HashMap<>();
         for(int num: nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
+        assert k <= map.size();
         ValueComparator vc = new ValueComparator();
         List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
         list.sort(vc);
@@ -73,7 +75,7 @@ public class Solution {
 
     public static void main(String[] args) {
         int[] nums = {1,1,2,2,3};
-        List<Integer> list = new Solution().topKFrequent3(nums, 2);
+        List<Integer> list = new Solution().topKFrequent(nums, 2);
         for(int num: list) {
             System.out.println(num);
         }

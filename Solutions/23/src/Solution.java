@@ -1,3 +1,5 @@
+import java.util.PriorityQueue;
+
 class ListNode {
     int val;
     ListNode next;
@@ -41,6 +43,31 @@ public class Solution {
         }
         return beginning.next;
     }
+
+    // 使用 Priority Queue, 理论上时间复杂度相同，但OJ上这个解法慢
+    public ListNode mergeKLists2(ListNode[] lists) {
+        int size = lists.length;
+        if (size == 0) return null;
+        if (size == 1) return lists[0];
+        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>((n1, n2) -> n1.val - n2.val);
+        for(int i = 0; i < size; i++) {
+            if(lists[i] != null) priorityQueue.add(lists[i]);
+        }
+        ListNode head = null, recent = null, pre = null;
+        while(!priorityQueue.isEmpty()) {
+            recent = priorityQueue.poll();
+            if(pre == null) head = recent;
+            else {
+                pre.next = recent;
+            }
+            pre = recent;
+            if(recent.next != null) {
+                priorityQueue.add(recent.next);
+            }
+        }
+        return head;
+    }
+
     public static void main(String[] args){
         //System.out.println("start");
         ListNode l1 = new ListNode(-1);
@@ -57,7 +84,7 @@ public class Solution {
         l[1] = l1;
         l[2] = null;
         l[3] = l3;
-        ListNode l4 = new Solution().mergeKLists(l);
+        ListNode l4 = new Solution().mergeKLists2(l);
         while (l4 != null) {
             System.out.println(l4.val);
             l4 = l4.next;
