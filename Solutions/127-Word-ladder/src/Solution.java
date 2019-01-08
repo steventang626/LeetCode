@@ -358,6 +358,6 @@ public class Solution {
         wordList.add("lot");
         wordList.add("log");
         wordList.add("cog");
-        System.out.println(new Solution().ladderLength8(beginWord, endWord, wordList));
+        System.out.println(new Solution().ladderLength5(beginWord, endWord, wordList));
     }
 }
