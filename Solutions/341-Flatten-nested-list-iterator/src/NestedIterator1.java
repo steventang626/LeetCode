@@ -32,7 +32,7 @@ public class NestedIterator1 implements Iterator<Integer> {
     }
 
     public static void main(String args[]) {
-//        NestedIterator i = new NestedIterator(nestedList);
+//        NestedIterator2 i = new NestedIterator2(nestedList);
 //        while (i.hasNext()) v[f()] = i.next();
     }
 }

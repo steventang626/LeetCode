@@ -1,56 +1,34 @@
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-
-interface NestedInteger {
-    // @return true if this NestedInteger holds a single integer, rather than a nested list.
-    public boolean isInteger();
-    // @return the single integer that this NestedInteger holds, if it holds a single integer
-    // Return null if this NestedInteger holds a nested list
-    public Integer getInteger();
-    // @return the nested list that this NestedInteger holds, if it holds a nested list
-    // Return null if this NestedInteger holds a single integer
-    public List<NestedInteger> getList();
-}
+import java.util.*;
 
 public class NestedIterator implements Iterator<Integer> {
-    private Stack<NestedInteger> stack;
+    private Stack<ListIterator<NestedInteger>> lists;
 
     public NestedIterator(List<NestedInteger> nestedList) {
-        stack = new Stack<>();
-        for (int i = nestedList.size() - 1; i >= 0; i--) {
-            stack.push(nestedList.get(i));
-        }
+        lists = new Stack<>();
+        lists.push(nestedList.listIterator());
     }
 
-    @Override
     public Integer next() {
-        NestedInteger top = stack.pop();
-        if (top == null) return null;
-        else {
-            return top.getInteger();
+        if(hasNext()) {
+            return lists.peek().next().getInteger();
+        } else {
+            throw new NoSuchElementException();
         }
     }
 
-    @Override
     public boolean hasNext() {
-        if(stack.empty()) return false;
-        NestedInteger top = stack.peek();
-        if(top.isInteger()) return true;
-        while (!top.isInteger()) {
-            stack.pop();
-            List<NestedInteger> list = top.getList();
-            for (int i = list.size() - 1; i >= 0; i--) {
-                stack.push(list.get(i));
+        while (!lists.empty()) {
+            if (!lists.peek().hasNext()) {
+                lists.pop();
+            } else {
+                NestedInteger x = lists.peek().next();
+                if (x.isInteger())
+                    return lists.peek().previous() == x;
+                lists.push(x.getList().listIterator());
             }
-            if(stack.empty()) return false;
-            top = stack.peek();
         }
-        return true;
+        return false;
     }
 
-    public static void main(String args[]) {
-//        NestedIterator i = new NestedIterator(nestedList);
-//        while (i.hasNext()) v[f()] = i.next();
-    }
+
 }
