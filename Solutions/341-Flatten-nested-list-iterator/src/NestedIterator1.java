@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class NestedIterator1 implements Iterator<Integer> {
@@ -14,6 +15,9 @@ public class NestedIterator1 implements Iterator<Integer> {
 
     @Override
     public Integer next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
         return stack.pop().getInteger();
     }
 
