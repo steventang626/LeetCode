@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 interface NestedIntegerInterface {
     // @return true if this NestedInteger holds a single integer, rather than a nested list.
@@ -15,8 +12,8 @@ interface NestedIntegerInterface {
 }
 
 class NestedInteger implements NestedIntegerInterface {
-    public Integer i;
-    public List<NestedInteger> list;
+    private Integer i;
+    private List<NestedInteger> list;
 
     public NestedInteger(Integer integer) {
         i = integer;
@@ -49,24 +46,34 @@ class NestedInteger implements NestedIntegerInterface {
 
 public class NestedIterator0 implements Iterator<Integer> {
     private Stack<NestedInteger> stack;
+    private List<NestedInteger> list;
+    private int next_times;
 
     public NestedIterator0(List<NestedInteger> nestedList) {
+        list = nestedList;
+
         stack = new Stack<>();
-        for (int i = nestedList.size() - 1; i >= 0; i--) {
-            stack.push(nestedList.get(i));
+        for (int i = list.size() - 1; i >= 0; i--) {
+            stack.push(list.get(i));
         }
     }
 
     @Override
     public Integer next() {
         if (!hasNext()) {
-            return null;
+            throw new NoSuchElementException();
         }
+        next_times++;
         return stack.pop().getInteger();
     }
 
-    @Override
-    public boolean hasNext() {
+    public void next_helper() {
+        if (hasNext_helper()) {
+            stack.pop();
+        }
+    }
+
+    public boolean hasNext_helper() {
         if(stack.empty()) return false;
         NestedInteger top = stack.peek();
         if(top.isInteger()) return true;
@@ -82,6 +89,19 @@ public class NestedIterator0 implements Iterator<Integer> {
         return true;
     }
 
+    @Override
+    public boolean hasNext() {
+        if(stack.empty()) return false;
+        stack.removeAllElements();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            stack.push(list.get(i));
+        }
+        for(int i = 0; i < next_times; i++) {
+            next_helper();
+        }
+        return hasNext_helper();
+    }
+
     public static void main(String args[]) {
         List<NestedInteger> nestedList = new ArrayList<>();
         List<NestedInteger> first = new ArrayList<>();
@@ -92,16 +112,34 @@ public class NestedIterator0 implements Iterator<Integer> {
         nestedList.add(new NestedInteger(4));
 
         NestedIterator0 i = new NestedIterator0(nestedList);
-        i.hasNext();
-        System.out.println(i.stack.peek().getInteger());
-        i.hasNext();
-        System.out.println(i.stack.peek().getInteger());
+        if (i.hasNext()) {
+            System.out.print(i.next() + " ");
+        }
+        if (i.hasNext()) {
+            System.out.print(i.next() + " ");
+        }
+//        i.hasNext();
+//        System.out.println(i.stack.peek().getInteger());
+//        i.hasNext();
+//        System.out.println(i.stack.peek().getInteger());
 
-        System.out.println("Here" + i.next() + " ");
+//        System.out.println("Here " + i.next() + " ");
+//
+//        System.out.println("List length: " + i.list.size());
+        nestedList.add(1, new NestedInteger(5));
+        nestedList.remove(3);
+        nestedList.set(2, new NestedInteger(6));
+
+//        System.out.println("List length: " + i.list.size());
 
         while (i.hasNext()) {
             System.out.print(i.next() + " ");
         }
+        System.out.println();
 
+//        NestedIterator0 i2 = new NestedIterator0(nestedList);
+//        while (i2.hasNext()) {
+//            System.out.print(i2.next() + " ");
+//        }
     }
 }
