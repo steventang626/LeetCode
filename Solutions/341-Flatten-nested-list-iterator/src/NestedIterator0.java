@@ -102,6 +102,12 @@ public class NestedIterator0 implements Iterator<Integer> {
         return hasNext_helper();
     }
 
+//    static int num = 0;
+//
+//    public static int f() {
+//        return num++;
+//    }
+
     public static void main(String args[]) {
         List<NestedInteger> nestedList = new ArrayList<>();
         List<NestedInteger> first = new ArrayList<>();
@@ -111,7 +117,10 @@ public class NestedIterator0 implements Iterator<Integer> {
         nestedList.add(new NestedInteger(3));
         nestedList.add(new NestedInteger(4));
 
+//        Integer[] v = new Integer[6];
         NestedIterator0 i = new NestedIterator0(nestedList);
+//        while (i.hasNext()) v[f()] = i.next();
+
         if (i.hasNext()) {
             System.out.print(i.next() + " ");
         }

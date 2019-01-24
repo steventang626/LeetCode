@@ -3,7 +3,7 @@ import java.util.*;
 public class NestedIterator1 implements Iterator<Integer> {
     private Stack<NestedInteger> stack;
     private List<NestedInteger> list;
-    private int next_times;
+    private int next_counter;
 
     public NestedIterator1(List<NestedInteger> nestedList) {
         list = nestedList;
@@ -18,7 +18,7 @@ public class NestedIterator1 implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        next_times++;
+        next_counter++;
         return stack.pop().getInteger();
     }
 
@@ -29,7 +29,7 @@ public class NestedIterator1 implements Iterator<Integer> {
         for (int i = list.size() - 1; i >= 0; i--) {
             stack.push(list.get(i));
         }
-        for(int i = 0; i < next_times; i++) {
+        for(int i = 0; i < next_counter; i++) {
             next_helper();
         }
         return hasNext_helper();
