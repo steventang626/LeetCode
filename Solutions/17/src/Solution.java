@@ -4,10 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Solution {
-    public static List<String> letterCombinations(String digits) {
+    private String[] strings = {" ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
         List<String> lc = new ArrayList<>();
-        String[] strings = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-
         int length = digits.length();
         if(length == 0) return lc;
         if(length == 1){
@@ -25,7 +24,31 @@ public class Solution {
             return lc;
         }
     }
+
+    private List<String> result;
+
+    public List<String> letterCombinations2(String digits) {
+        result = new ArrayList<>();
+        if (digits.length() > 0) {
+            findCombination(digits, 0, "");
+        }
+        return result;
+    }
+
+    private void findCombination(String digits, int index, String recentString) {
+        if (index == digits.length()) {
+            result.add(recentString);
+            return;
+        }
+        char recent = digits.charAt(index);
+        String string = strings[recent - '0'];
+        for (int i = 0; i < string.length(); i++) {
+            findCombination(digits, index + 1, recentString + string.charAt(i));
+        }
+
+    }
+
     public static void main(String[] args){
-        System.out.println(letterCombinations("23"));
+        System.out.println(new Solution().letterCombinations2("23"));
     }
 }
