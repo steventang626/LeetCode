@@ -22,15 +22,73 @@ public class Solution {
         return new ArrayList<>(result);
     }
 
+    private Set<List<Integer>> result;
+    private boolean[] used;
+    public List<List<Integer>> permuteUnique2(int[] nums){
+        result = new HashSet<>();
+        if (nums != null && nums.length != 0) {
+            used = new boolean[nums.length];
+            generatePermutation(nums, 0, new LinkedList<>());
+        }
+        return new ArrayList<>(result);
+    }
+
+    private void generatePermutation(int[] nums, int index, LinkedList<Integer> recent){
+        if (index == nums.length) {
+            if (!result.contains(recent)) {
+                result.add(new LinkedList<>(recent));
+            }
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!used[i]) {
+                recent.addLast(nums[i]);
+                used[i] = true;
+                generatePermutation(nums, index + 1, recent);
+                recent.removeLast();
+                used[i] = false;
+            }
+        }
+    }
+
+    private List<List<Integer>> result3;
+    private boolean[] used3;
+    public List<List<Integer>> permuteUnique3(int[] nums){
+        result3 = new ArrayList<>();
+        if (nums != null && nums.length != 0) {
+            used3 = new boolean[nums.length];
+            Arrays.sort(nums);
+            generatePermutation2(nums, 0, new LinkedList<>());
+        }
+        return result3;
+    }
+
+    private void generatePermutation2(int[] nums, int index, LinkedList<Integer> recent){
+        if (index == nums.length) {
+            result3.add(new LinkedList<>(recent));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!used3[i]) {
+                // The pruning in this step is very important, it reduces a lot of work
+                if (i > 0 && nums[i] == nums[i - 1] && !used3[i - 1]) {
+                    continue;
+                }
+                recent.addLast(nums[i]);
+                used3[i] = true;
+                generatePermutation2(nums, index + 1, recent);
+                recent.removeLast();
+                used3[i] = false;
+            }
+        }
+    }
+
     public static void main(String[] args){
         int[] a = {1,1,2};
-        List<List<Integer>> result = new Solution().permuteUnique(a);
+        List<List<Integer>> result = new Solution().permuteUnique3(a);
         for(int i =0; i<result.size(); i++){
             List<Integer> recent = result.get(i);
-            for(int j = 0; j < recent.size(); j++){
-                System.out.print(recent.get(j)+" ");
-            }
-            System.out.println();
+            System.out.println(recent);
         }
     }
 }
