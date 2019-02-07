@@ -26,8 +26,32 @@ public class Solution {
         }
         return result;
     }
+
+    private List<List<Integer>> result;
+    public List<List<Integer>> combine2(int n, int k) {
+        result = new ArrayList<>();
+        if (n <= 0 || k <= 0 || k > n) {
+            return result;
+        }
+        generateCombinations(n, k, 1, new ArrayList<>());
+        return result;
+    }
+
+    private void generateCombinations(int n, int k, int start, List<Integer> recentResult) {
+        if (recentResult.size() == k) {
+            result.add(new ArrayList<>(recentResult));
+            return;
+        }
+        // Pruning
+        for (int i = start; i <= (n - (k - recentResult.size()) + 1); i++) {
+            recentResult.add(i);
+            generateCombinations(n, k, i + 1, recentResult);
+            recentResult.remove(recentResult.size() - 1);
+        }
+    }
+
     public static void main(String[] args){
-        List<List<Integer>> result = new Solution().combine(5,2);
+        List<List<Integer>> result = new Solution().combine2(4,2);
         for(int i = 0; i < result.size(); i++){
             for(int j = 0; j < result.get(i).size(); j++){
                 System.out.print(result.get(i).get(j)+" ");
