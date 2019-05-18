@@ -49,11 +49,12 @@ public class Solution {
         }
         return result;
     }
+
     public List<List<Integer>> combinationSum1(int[] candidates, int target) {
         // 略去了开始时的排序
         List<List<Integer>> result = new ArrayList<>();
         if(candidates.length == 0) return result;
-        for(int i = 0; i< candidates.length; i++){
+        for (int i = 0; i < candidates.length; i++) {
             if(target == candidates[i]){
                 List<Integer> a = new ArrayList<>();
                 a.add(target);
@@ -61,11 +62,11 @@ public class Solution {
                     result.add(a);
                 }
                 break;
-            } else if(target < candidates[i]){
+            } else if (target < candidates[i]) {
                 break;
-            } else if(target - candidates[i] < candidates[0]){
+            } else if (target - candidates[i] < candidates[0]) {
                 //continue;
-            } else{
+            } else {
                 List<List<Integer>> recent_result = combinationSum1(candidates, target - candidates[i]);
                 if(recent_result.size() == 0){
                     //continue;
@@ -93,10 +94,37 @@ public class Solution {
         }
         return result;
     }
+
+    private List<List<Integer>> combinationSumResult;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        combinationSumResult = new ArrayList<>();
+        if (candidates.length <= 0 || target <= 0) {
+            return combinationSumResult;
+        }
+        Arrays.sort(candidates);
+        generateCombinationSum(candidates, target, 0, new ArrayList<>());
+        return combinationSumResult;
+    }
+
+    private void generateCombinationSum(int[] candidates, int target, int start, List<Integer> recentResult) {
+        if (target == 0) {
+            combinationSumResult.add(new ArrayList<>(recentResult));
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            if (candidates[i] > target) {
+                return;
+            }
+            recentResult.add(candidates[i]);
+            generateCombinationSum(candidates, target - candidates[i], i, recentResult);
+            recentResult.remove(recentResult.size() - 1);
+        }
+    }
+
     public static void main(String[] args){
         int[] a = {2,3,6,7};
         int target = 7;
-        List<List<Integer>> result = new Solution().combinationSum(a,target);
+        List<List<Integer>> result = new Solution().combinationSum2(a,target);
         //System.out.print(result.size());
         for(int i = 0; i<result.size();i++){
             List<Integer> r = result.get(i);
