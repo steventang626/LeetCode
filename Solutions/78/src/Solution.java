@@ -47,11 +47,41 @@ public class Solution {
         return result;
     }
 
+    private List<List<Integer>> subsetResult;
+    public List<List<Integer>> subsets2(int[] nums) {
+        subsetResult = new ArrayList<>();
+        generateSubset2(nums, 0, new ArrayList<>());
+        return subsetResult;
+    }
+
+    private void generateSubset(int[] nums, int start, List<Integer> recentResult) {
+        if (start == nums.length) {
+            subsetResult.add(new ArrayList<>(recentResult));
+            return;
+        }
+        generateSubset(nums, start + 1, recentResult);
+        recentResult.add(nums[start]);
+        generateSubset(nums, start + 1, recentResult);
+        recentResult.remove(recentResult.size() - 1);
+    }
+
+    private void generateSubset2(int[] nums, int start, List<Integer> recentResult) {
+        if (start <= nums.length) {
+            subsetResult.add(new ArrayList<>(recentResult));
+        }
+        while (start < nums.length) {
+            recentResult.add(nums[start]);
+            generateSubset2(nums, start + 1, recentResult);
+            recentResult.remove(recentResult.size() - 1);
+            start++;
+        }
+    }
+
     public static void main(String[] args){
-        int[] a = {1,2,3};
-        List<List<Integer>> result = new Solution().subsets(a);
-        for(int i = 0; i < result.size(); i++){
-            for(int j = 0; j < result.get(i).size(); j++){
+        int[] a = {2,3,4};
+        List<List<Integer>> result = new Solution().subsets2(a);
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result.get(i).size(); j++) {
                 System.out.print(result.get(i).get(j)+" ");
             }
             System.out.println();
