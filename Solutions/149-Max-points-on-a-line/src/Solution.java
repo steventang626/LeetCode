@@ -1,5 +1,4 @@
 import java.math.BigDecimal;
-import java.rmi.MarshalledObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +8,7 @@ class Point {
     Point() { x = 0; y = 0; }
     Point(int a, int b) { x = a; y = b; }
 }
+
 public class Solution {
     public int maxPoints(Point[] points) {
         int result = 0;

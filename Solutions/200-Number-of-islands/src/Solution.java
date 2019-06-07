@@ -128,7 +128,7 @@ public class Solution {
     }
 
     private void dfs(int i, int j) {
-        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int k = 0; k < 4; k++) {
             int x = i + directions[k][0];
             int y = j + directions[k][1];
