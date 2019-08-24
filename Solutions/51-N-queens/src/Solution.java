@@ -12,16 +12,16 @@ public class Solution {
         return result;
     }
 
-    public void solve(int i, int[] rows, int n, List<List<String>> result){
+    private void solve(int i, int[] rows, int n, List<List<String>> result){
         if(i == n) {
             List<String> current = new ArrayList<>();
             for(int p = 0; p < n; p++){
-                String line = "";
+                StringBuilder line = new StringBuilder();
                 for(int q = 0; q < n; q++){
-                    if(q == rows[p]) line += "Q";
-                    else line += ".";
+                    if(q == rows[p]) line.append("Q");
+                    else line.append(".");
                 }
-                current.add(line);
+                current.add(line.toString());
             }
             result.add(current);
         } else{
@@ -36,7 +36,7 @@ public class Solution {
         }
     }
 
-    public boolean check(int[] rows, int i, int j, int n){
+    private boolean check(int[] rows, int i, int j, int n){
         for(int k = 0; k < i; k++){
             if((rows[k] == j) || (Math.abs(i - k) == Math.abs(j - rows[k]))){
                 return false;
@@ -48,9 +48,9 @@ public class Solution {
     public static void main(String[] args){
         int a = 4;
         List<List<String>> result = new Solution().solveNQueens(a);
-        for(int i = 0; i < result.size(); i++){
-            for(int j = 0; j < result.get(i).size(); j++){
-                System.out.println(result.get(i).get(j)+" ");
+        for (List<String> strings : result) {
+            for (String string : strings) {
+                System.out.println(string + " ");
             }
             System.out.println();
         }
