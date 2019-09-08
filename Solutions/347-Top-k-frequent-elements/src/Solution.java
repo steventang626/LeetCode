@@ -32,7 +32,8 @@ public class Solution {
         for(int num: nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        PriorityQueue<Integer> heap = new PriorityQueue<>((n1, n2) -> map.get(n1) - map.get(n2));
+        // PriorityQueue<Integer> heap = new PriorityQueue<>((n1, n2) -> map.get(n1) - map.get(n2));
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.comparingInt(map::get));
         for(int n: map.keySet()) {
             heap.add(n);
             if(heap.size() > k) {
