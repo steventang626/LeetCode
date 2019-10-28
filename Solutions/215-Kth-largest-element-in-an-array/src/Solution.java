@@ -8,7 +8,6 @@ public class Solution {
 
     public int quickSelect(int[] nums, int start, int end, int k) {
         if(start == end) return nums[start];
-
         int mid = nums[start];
         int left = start;
         int right = end;
@@ -21,14 +20,9 @@ public class Solution {
         }
         nums[start] = nums[left];
         nums[left] = mid;
-
-//        for(int i = start; i <= end; i++){
-//            System.out.print(nums[i] + " ");
-//        }
-//        System.out.println(left + " left");
-
-        if (left == nums.length - k) return mid;
-        else if (left < nums.length - k) {
+        if (left == nums.length - k) {
+            return mid;
+        } else if (left < nums.length - k) {
             return quickSelect(nums, left + 1, end, k);
         } else {
             return quickSelect(nums, start, left - 1, k);

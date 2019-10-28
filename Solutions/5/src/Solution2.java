@@ -1,3 +1,5 @@
+import java.util.Set;
+
 public class Solution2 {
     // Manacher's Algorithm
     public static String longestPalindrome(String s) {
@@ -8,11 +10,14 @@ public class Solution2 {
             sb.append("#");
         }
         t = sb.toString();
+        // System.out.println(t);
         int[] p = new int[t.length()];
         int mx = 0, id = 0, resLength = 0, resCenter = 0;
         for (int i = 1; i < t.length(); i++) {
             p[i] = mx > i ? Math.min(p[2 * id - i], mx - i) : 1;
-            while (i + p[i] < t.length() && i - p[i] >= 0 && t.charAt(i + p[i]) == t.charAt(i - p[i])) p[i]++;
+            while (i + p[i] < t.length() && i - p[i] >= 0 && t.charAt(i + p[i]) == t.charAt(i - p[i])) {
+                p[i]++;
+            }
             if (mx < i + p[i]) {
                 mx = i + p[i];
                 id = i;
