@@ -8,6 +8,7 @@ public class Solution {
         System.out.println(new Solution().threeSumSmaller(nums, target));
     }
 
+    // Time O(n^2), Space O(1)
     public int threeSumSmaller(int[] nums, int target) {
         int result = 0;
         Arrays.sort(nums);
