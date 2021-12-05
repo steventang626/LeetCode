@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 class DSU {
-    private int[] root;
-    private int[] rank;
+    private final int[] root;
+    private final int[] rank;
+
     DSU(int size) {
         root = new int[size];
         rank = new int[size];
@@ -26,7 +27,7 @@ class DSU {
     boolean union(int a, int b) {
         int rootA = find(a);
         int rootB = find(b);
-        if (rootA == rootB)  {
+        if (rootA == rootB) {
             return false;
         } else if (rank[rootA] < rank[rootB]) {
             root[rootA] = rootB;
@@ -42,8 +43,16 @@ class DSU {
 
 public class Solution {
     private Set<Integer> visited;
+
+    public static void main(String[] args) {
+        int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
+        int[] result = new Solution().findRedundantConnection2(edges);
+        System.out.println(result[0]);
+        System.out.println(result[1]);
+    }
+
     // DFS, Time O(n^2)
-    public int[] findRedundantConnection(int[][] edges) {
+    public int[] findRedundantConnection2(int[][] edges) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         visited = new HashSet<>();
         for (int[] edge : edges) {
@@ -68,7 +77,7 @@ public class Solution {
             if (start == end) {
                 return true;
             }
-            for(int neigh : graph.get(start)) {
+            for (int neigh : graph.get(start)) {
                 if (dfs(graph, neigh, end)) {
                     return true;
                 }
@@ -78,9 +87,8 @@ public class Solution {
     }
 
     // Union-find, Time O(n)
-    public int[] findRedundantConnection2(int[][] edges) {
-        final int MAX_SIZE = 1001;
-        DSU dsu = new DSU(MAX_SIZE);
+    public int[] findRedundantConnection(int[][] edges) {
+        DSU dsu = new DSU(edges.length + 1);
         for (int[] edge : edges) {
             int start = edge[0], end = edge[1];
             if (!dsu.union(start, end)) {
@@ -88,12 +96,5 @@ public class Solution {
             }
         }
         return new int[2];
-    }
-
-    public static void main(String[] args) {
-	    int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
-	    int[] result = new Solution().findRedundantConnection2(edges);
-	    System.out.println(result[0]);
-        System.out.println(result[1]);
     }
 }

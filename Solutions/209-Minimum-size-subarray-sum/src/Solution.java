@@ -34,28 +34,33 @@ public class Solution {
     }
 
     // 写法更精炼
+
     public int minSubArrayLen(int s, int[] nums) {
-        int left = 0;
-        int right = -1;
-        int sum = 0;
-        int result = nums.length + 1;
+        int left = 0, right = -1, sum = 0, result = nums.length + 1;
         while (left < nums.length) {
             if (sum < s) {
                 if (right < nums.length - 1) {
                     right++;
                     sum += nums[right];
-                } else break;
+                } else {
+                    break;
+                }
             } else {
                 sum -= nums[left];
                 left++;
             }
             if (sum >= s) {
-                if (left == right) return 1;
+                if (left == right) {
+                    return 1;
+                }
                 result = Math.min(result, right - left + 1);
             }
         }
-        if (result == nums.length + 1) return 0;
-        else return result;
+        if (result == nums.length + 1) {
+            return 0;
+        } else {
+            return result;
+        }
     }
 
     public static void main(String[] args) {

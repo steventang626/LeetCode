@@ -7,6 +7,17 @@ import java.util.Stack;
 public class Solution {
     private int height, width;
     private boolean[][] isVisited;
+    private char[][] globalGrid;
+
+    public static void main(String[] args) {
+        char[][] grid = new char[][]{
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}};
+        System.out.println(new Solution().numIslands3(grid));
+    }
+
     public int numIslands(char[][] grid) {
         int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         int num = 0;
@@ -21,6 +32,7 @@ public class Solution {
             for (int j = 0; j < width; j++) {
                 if (grid[i][j] == '1' && !isVisited[i][j]) {
                     queue.add(new Pair<>(i, j));
+                    isVisited[i][j] = true;
                     while (!queue.isEmpty()) {
                         Pair<Integer, Integer> point = queue.poll();
                         for (int k = 0; k < 4; k++) {
@@ -57,7 +69,13 @@ public class Solution {
             for (int j = 0; j < width; j++) {
                 if (grid[i][j] == '1' && !isVisited[i][j]) {
                     queue.add(new int[]{i, j});
+                    isVisited[i][j] = true;
                     while (!queue.isEmpty()) {
+                        System.out.print(queue.size());
+                        for (int[] x : queue) {
+                            System.out.print(" (" + x[0] + ", " + x[1] + ") ");
+                        }
+                        System.out.println();
                         int[] point = queue.poll();
                         for (int k = 0; k < 4; k++) {
                             int x = point[0] + directions[k][0];
@@ -89,13 +107,19 @@ public class Solution {
             for (int j = 0; j < width; j++) {
                 if (grid[i][j] == '1') {
                     stack.push(new int[]{i, j});
+                    grid[i][j] = '0';
                     while (!stack.isEmpty()) {
+                        System.out.print(stack.size());
+                        for (int[] x : stack) {
+                            System.out.print(" (" + x[0] + ", " + x[1] + ") ");
+                        }
+                        System.out.println();
                         int[] point = stack.pop();
                         for (int k = 0; k < 4; k++) {
                             int x = point[0] + directions[k][0];
                             int y = point[1] + directions[k][1];
                             if ((x >= 0 && x < height && y >= 0 && y < width) && grid[x][y] == '1') {
-                                stack.add(new int[]{x, y});
+                                stack.push(new int[]{x, y});
                                 grid[x][y] = '0';
                             }
                         }
@@ -107,7 +131,6 @@ public class Solution {
         return num;
     }
 
-    private char[][] globalGrid;
     public int numIslands4(char[][] grid) {
         globalGrid = grid;
         int num = 0;
@@ -119,7 +142,7 @@ public class Solution {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (globalGrid[i][j] == '1') {
-                    dfs2(i, j);
+                    dfs(i, j);
                     num++;
                 }
             }
@@ -128,12 +151,12 @@ public class Solution {
     }
 
     private void dfs(int i, int j) {
+        globalGrid[i][j] = '0';
         int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int k = 0; k < 4; k++) {
             int x = i + directions[k][0];
             int y = j + directions[k][1];
             if ((x >= 0 && x < height && y >= 0 && y < width) && globalGrid[x][y] == '1') {
-                globalGrid[x][y] = '0';
                 dfs(x, y);
             }
         }
@@ -149,10 +172,5 @@ public class Solution {
         dfs2(i + 1, j);
         dfs2(i, j - 1);
         dfs2(i, j + 1);
-    }
-
-    public static void main(String[] args) {
-        char[][] grid = new char[][]{{'1', '1', '0', '0', '0'}, {'1', '1', '0', '0', '0'}, {'0', '0', '1', '0', '0'}, {'0', '0', '0', '1', '1'}};
-        System.out.println(new Solution().numIslands4(grid));
     }
 }

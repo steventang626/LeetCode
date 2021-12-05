@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class Solution {
+
     public int evalRPN(String[] tokens) {
         Stack<Integer> numbers = new Stack<>();
-        int num1;
-        int num2;
+        int num1, num2;
         for(int i = 0; i < tokens.length; i++) {
             if (tokens[i].equals("+") || tokens[i].equals("-") || tokens[i].equals("*") || tokens[i].equals("/")) {
                 num2 = numbers.pop();
@@ -29,6 +29,7 @@ public class Solution {
         }
         return numbers.pop();
     }
+
     public static void main(String[] args) {
         String[] tokens = {"2", "1", "+", "3", "*"};
         System.out.println(new Solution().evalRPN(tokens));

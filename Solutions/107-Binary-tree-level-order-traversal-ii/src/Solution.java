@@ -4,41 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-    TreeNode(int x) { val = x; }
+
+    TreeNode(int x) {
+        val = x;
+    }
 }
 
 public class Solution {
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) return result;
-
-        LinkedList<Pair<TreeNode, Integer>> queue = new LinkedList<>();
-        queue.addLast(new Pair<>(root, 0));
-        while(!queue.isEmpty()) {
-            Pair<TreeNode, Integer> recent = queue.removeFirst();
-            TreeNode node = recent.getKey();
-            int level = recent.getValue();
-
-            if(result.size() == level) {
-                result.add(new ArrayList<>());
-            }
-            result.get(level).add(node.val);
-            if (node.left != null) {
-                queue.addLast(new Pair<>(node.left, level + 1));
-            }
-            if (node.right != null) {
-                queue.addLast(new Pair<>(node.right, level + 1));
-            }
-        }
-        Collections.reverse(result);
-        return result;
-    }
-
     public static void main(String[] args) {
         TreeNode a1 = new TreeNode(3);
         TreeNode a2 = new TreeNode(9);
@@ -49,5 +27,29 @@ public class Solution {
         a3.right = new TreeNode(7);
         List<List<Integer>> results = new Solution().levelOrderBottom(a1);
         System.out.println(results);
+    }
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>(root, 0));
+        while (!queue.isEmpty()) {
+            Pair<TreeNode, Integer> recent = queue.poll();
+            TreeNode node = recent.getKey();
+            int level = recent.getValue();
+            if (result.size() == level) {
+                result.add(new ArrayList<>());
+            }
+            result.get(level).add(node.val);
+            if (node.left != null) {
+                queue.offer(new Pair<>(node.left, level + 1));
+            }
+            if (node.right != null) {
+                queue.offer(new Pair<>(node.right, level + 1));
+            }
+        }
+        Collections.reverse(result);
+        return result;
     }
 }

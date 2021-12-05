@@ -1,20 +1,14 @@
-import java.util.HashSet;
+import javafx.util.Pair;
 
-class Pair {
-    int x;
-    int y;
-    Pair(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
+import java.util.HashSet;
+import java.util.Set;
 
 public class Solution {
-    private int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    private final int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private int m, n;
     private boolean[][] visited;
     private boolean isSurrounded = true;
-    public void solve(char[][] board) {
+    public void solve3(char[][] board) {
         m = board.length;
         if (m == 0) {
             return;
@@ -24,15 +18,15 @@ public class Solution {
             return;
         }
         visited = new boolean[m][n];
-        HashSet<Pair> oSet = new HashSet<>();
+        Set<Pair<Integer, Integer>> oSet = new HashSet<>();
         for (int i = 1; i < m - 1; i++) {
             for (int j = 1; j < n - 1; j++) {
                 if (board[i][j] == 'O' && !visited[i][j]) {
                     isSurrounded = true;
                     dfs(board, i, j, oSet);
                     if (isSurrounded) {
-                        for (Pair pair : oSet) {
-                            board[pair.x][pair.y] = 'X';
+                        for (Pair<Integer, Integer> pair : oSet) {
+                            board[pair.getKey()][pair.getValue()] = 'X';
                         }
                     }
                     oSet.clear();
@@ -41,9 +35,9 @@ public class Solution {
         }
     }
 
-    void dfs(char[][] board, int x, int y, HashSet<Pair> oSet) {
+    void dfs(char[][] board, int x, int y, Set<Pair<Integer, Integer>> oSet) {
         visited[x][y] = true;
-        oSet.add(new Pair(x, y));
+        oSet.add(new Pair<>(x, y));
         for (int i = 0; i < 4; i++) {
             int newX = x + directions[i][0];
             int newY = y + directions[i][1];
@@ -57,7 +51,7 @@ public class Solution {
         }
     }
 
-    public void solve2(char[][] board) {
+    public void solve(char[][] board) {
         m = board.length;
         if (m == 0) {
             return;
@@ -69,7 +63,7 @@ public class Solution {
         for (int i = 0; i <= m - 1; i++) {
             for (int j = 0; j <= n - 1; j++) {
                 if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
-                    dfs2(board, i, j);
+                    dfs(board, i, j);
                 }
             }
         }
@@ -85,20 +79,20 @@ public class Solution {
         }
     }
 
-    void dfs2(char[][] board, int x, int y) {
+    void dfs(char[][] board, int x, int y) {
         board[x][y] = '$';
         for (int i = 0; i < 4; i++) {
             int newX = x + directions[i][0];
             int newY = y + directions[i][1];
             if (newX >= 0 && newX <= m - 1 && newY >= 0 && newY <= n - 1 && board[newX][newY] == 'O') {
-                dfs2(board, newX, newY);
+                dfs(board, newX, newY);
             }
         }
     }
 
     public static void main(String[] args) {
         char[][] board = {{'X','X','X','X'}, {'X','O','O','X'}, {'X','X','O','X'}, {'X','O','X','X'}};
-        new Solution().solve2(board);
+        new Solution().solve(board);
         for (char[] chars : board) {
             for (char ch : chars) {
                 System.out.print(ch + " ");

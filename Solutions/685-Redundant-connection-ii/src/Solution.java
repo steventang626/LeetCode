@@ -36,9 +36,8 @@ class DSU {
 public class Solution {
     // Union-find, Time O(n)
     public int[] findRedundantDirectedConnection(int[][] edges) {
-        final int MAX_SIZE = 1001;
-        DSU dsu = new DSU(MAX_SIZE);
-        int[] root = new int[MAX_SIZE];
+        DSU dsu = new DSU(edges.length + 1);
+        int[] root = new int[edges.length + 1];
         int[] firstEdge = new int[2];
         int[] secondEdge = new int[2];
         for (int[] edge : edges) {
